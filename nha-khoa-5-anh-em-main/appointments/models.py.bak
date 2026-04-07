@@ -1,0 +1,58 @@
+from django.db import models
+
+# 1. Đưa cái này ra ngoài cùng để tất cả các bảng (Appointment, ServicePrice) đều dùng được
+GENDER_CHOICES = [
+    ('Anh', 'Anh'),
+    ('Chị', 'Chị'),
+]
+
+# 2. Bảng Đội ngũ bác sĩ
+class Doctor(models.Model):
+    name = models.CharField(max_length=200)
+    specialty = models.CharField(max_length=200, verbose_name="Chuyên khoa")
+    experience = models.TextField(verbose_name="Kinh nghiệm")
+    image_url = models.URLField(max_length=500, verbose_name="Link ảnh bác sĩ")
+
+    def __str__(self):
+        return self.name
+
+# 3. Bảng Tin tức
+class News(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Tiêu đề")
+    content = models.TextField(verbose_name="Nội dung")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Ngày đăng")
+    image_url = models.URLField(max_length=500, verbose_name="Link ảnh minh họa")
+
+    def __str__(self):
+        return self.title
+
+# 4. Bảng Lịch hẹn (Dựa trên code cũ của bạn)
+class Appointment(models.Model):
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, verbose_name="Danh xưng")
+    fullname = models.CharField(max_length=255, verbose_name="Họ tên")
+    phone = models.CharField(max_length=20, verbose_name="Số điện thoại")
+    service = models.CharField(max_length=100, null=True, blank=True, verbose_name="Dịch vụ quan tâm")
+    branch = models.CharField(max_length=255, null=True, blank=True, verbose_name="Chi nhánh")
+    appointment_date = models.DateField(null=True, blank=True, verbose_name="Ngày hẹn dự kiến")
+    note = models.TextField(blank=True, null=True, verbose_name="Mong muốn khách hàng")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Thời điểm đặt")
+
+    def __str__(self):
+        return f"{self.gender} {self.fullname} - {self.phone}"
+
+    class Meta:
+        verbose_name = "Lịch hẹn"
+        verbose_name_plural = "Danh sách lịch hẹn"
+
+# 5. Bảng Bảng giá
+class ServicePrice(models.Model):
+    service_name = models.CharField(max_length=200, verbose_name="Tên dịch vụ")
+    unit = models.CharField(max_length=50, verbose_name="Đơn vị") # Răng, Lần, Gói
+    price = models.IntegerField(verbose_name="Giá tiền")
+    
+    def __str__(self):
+        return f"{self.service_name} - {self.price} VNĐ"
+
+    class Meta:
+        verbose_name = "Bảng giá"
+        verbose_name_plural = "Quản lý bảng giá"
