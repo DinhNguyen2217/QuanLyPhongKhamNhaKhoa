@@ -21,6 +21,7 @@ class UserProfile(models.Model):
         return f"{self.user.username} ({self.role})"
 
 class Doctor(models.Model):
+<<<<<<< HEAD
     name = models.CharField(max_length=150)
     title = models.CharField(max_length=80, blank=True)
     specialty = models.CharField(max_length=120, blank=True)
@@ -29,6 +30,18 @@ class Doctor(models.Model):
     avatar = models.CharField(max_length=255, blank=True)
     def __str__(self):
         return self.name
+=======
+    name = models.CharField(max_length=150, verbose_name="Họ tên")
+    title = models.CharField(max_length=80, blank=True, verbose_name="Chức vụ") # Ví dụ: Trưởng khoa, Bác sĩ chính
+    qualification = models.CharField(max_length=120, blank=True, verbose_name="Trình độ") # Ví dụ: Tiến sĩ, Thạc sĩ, Cử nhân
+    specialty = models.CharField(max_length=120, blank=True, verbose_name="Chuyên khoa")
+    experience_years = models.PositiveSmallIntegerField(default=0, verbose_name="Số năm kinh nghiệm")
+    bio = models.TextField(blank=True, verbose_name="Tiểu sử")
+    avatar = models.CharField(max_length=255, blank=True, verbose_name="Link ảnh đại diện")
+    
+    def __str__(self):
+        return f"{self.title}. {self.name}"
+>>>>>>> c7fbb98 (DuySang01: Hoàn thiện chức năng Bác sĩ và Lịch làm việc)
 
 class Service(models.Model):
     name = models.CharField(max_length=120)
@@ -39,11 +52,31 @@ class Service(models.Model):
 
 class Schedule(models.Model):
     SHIFT_CHOICES = (('morning','Ca sáng'), ('afternoon','Ca chiều'))
+<<<<<<< HEAD
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='schedules')
     weekday = models.IntegerField(choices=[(i,str(i)) for i in range(0,7)])  # 0=Mon..6=Sun
     shift = models.CharField(max_length=10, choices=SHIFT_CHOICES)
     def __str__(self):
         return f"{self.doctor.name} - {self.get_shift_display()} - {self.weekday}"
+=======
+    WEEKDAY_CHOICES = [
+        (0, 'Thứ Hai'), (1, 'Thứ Ba'), (2, 'Thứ Tư'), 
+        (3, 'Thứ Năm'), (4, 'Thứ Sáu'), (5, 'Thứ Bảy'), (6, 'Chủ Nhật'),
+    ]
+    
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='schedules')
+    weekday = models.IntegerField(choices=WEEKDAY_CHOICES, verbose_name="Ngày trực")
+    shift = models.CharField(max_length=10, choices=SHIFT_CHOICES, verbose_name="Ca trực")
+
+    class Meta:
+        # Đảm bảo một bác sĩ không bị trùng lịch trực trong cùng 1 buổi
+        unique_together = ('doctor', 'weekday', 'shift')
+        verbose_name = "Lịch làm việc"
+        verbose_name_plural = "Lịch làm việc"
+
+    def __str__(self):
+        return f"{self.doctor.name} - {self.get_weekday_display()} - {self.get_shift_display()}"
+>>>>>>> c7fbb98 (DuySang01: Hoàn thiện chức năng Bác sĩ và Lịch làm việc)
 
 class Appointment(models.Model):
     SHIFT_CHOICES = (('morning','Ca sáng'), ('afternoon','Ca chiều'))
@@ -81,5 +114,9 @@ class Appointment(models.Model):
             return cls.objects.create(
                 fullname=fullname, phone=phone, date=date, shift=shift,
                 service=service, doctor=doctor, symptom=symptom, deposit=deposit
+<<<<<<< HEAD
             )
     
+=======
+            )
+>>>>>>> c7fbb98 (DuySang01: Hoàn thiện chức năng Bác sĩ và Lịch làm việc)
