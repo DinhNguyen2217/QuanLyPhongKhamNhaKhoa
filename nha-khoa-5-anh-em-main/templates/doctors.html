@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 // ...existing code...
 {% load static %}
 {% include 'index.html' %} <style>
     /* Ẩn các phần không liên quan của trang index khi ở trang bác sĩ */
-=======
-{% load static %}
-{% include 'index.html' %} 
-
-<style>
-    /* Giữ nguyên style cũ của bạn */
->>>>>>> c7fbb98 (DuySang01: Hoàn thiện chức năng Bác sĩ và Lịch làm việc)
     .main-container, .price-section { display: none; } 
     
     .doctors-page-container {
@@ -24,33 +16,14 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         border-radius: 8px;
         overflow: hidden;
-<<<<<<< HEAD
     }
     .doctor-info { padding: 30px; }
     .doctor-name { color: #0046a7; font-size: 24px; margin-bottom: 10px; text-transform: uppercase; }
-=======
-        transition: 0.3s;
-    }
-    .doctor-card:hover { transform: translateY(-5px); }
-    .doctor-info { padding: 30px; flex: 1; }
-    .doctor-name { color: #0046a7; font-size: 24px; margin-bottom: 10px; text-transform: uppercase; }
-    
-    .btn-detail {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 8px 20px;
-        background-color: #0046a7;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-    }
->>>>>>> c7fbb98 (DuySang01: Hoàn thiện chức năng Bác sĩ và Lịch làm việc)
 </style>
 
 <div class="doctors-page-container">
     <h1 style="text-align: center; color: #111; margin-bottom: 50px;">ĐỘI NGŨ BÁC SĨ CHUYÊN GIA</h1>
     
-<<<<<<< HEAD
     <div class="doctor-card">
         <img src="{% static 'bs2.png' %}" width="250" alt="Bác sĩ Bùi Nhật Lâm">
         <div class="doctor-info">
@@ -93,37 +66,3 @@
     </div>
 </div>
 // ...existing code...
-=======
-    <!-- VÒNG LẶP ĐỂ LẤY DỮ LIỆU TỪ ADMIN -->
-    {% for doctor in doctors %}
-    <div class="doctor-card">
-        <!-- Hiển thị ảnh: Nếu có link avatar thì hiện, không thì hiện ảnh mặc định -->
-        <img src="{% if doctor.avatar %}{{ doctor.avatar }}{% else %}{% static 'bs2.png' %}{% endif %}" 
-             width="250" style="object-fit: cover;" alt="{{ doctor.name }}">
-        
-        <div class="doctor-info">
-            <h2 class="doctor-name">{{ doctor.name }}</h2>
-            <p><strong>Chức vụ:</strong> {{ doctor.title }}</p>
-            <p><strong>Trình độ:</strong> {{ doctor.qualification }}</p>
-            <p><strong>Chuyên khoa:</strong> {{ doctor.specialty }}</p>
-            <p><strong>Kinh nghiệm:</strong> {{ doctor.experience_years }} năm</p>
-            <p>{{ doctor.bio }}</p>
-            
-            <!-- Link xem lịch trực của bác sĩ này -->
-            <a href="{% url 'appointments:doctor_detail' doctor.pk %}" class="btn-detail">Xem lịch trực cá nhân</a>
-        </div>
-    </div>
-    {% empty %}
-    <div style="text-align: center; padding: 50px;">
-        <p>Hiện chưa có bác sĩ nào trong hệ thống. Vui lòng thêm bác sĩ từ Admin.</p>
-    </div>
-    {% endfor %}
-
-    <!-- Nút xem lịch làm việc chung -->
-    <div style="text-align: center; margin-top: 40px;">
-        <a href="{% url 'appointments:schedule_page' %}" class="btn-detail" style="background-color: #28a745;">
-            📅 XEM LỊCH TRỰC TUẦN TỔNG QUÁT
-        </a>
-    </div>
-</div>
->>>>>>> c7fbb98 (DuySang01: Hoàn thiện chức năng Bác sĩ và Lịch làm việc)

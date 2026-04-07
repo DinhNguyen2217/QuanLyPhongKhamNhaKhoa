@@ -1,0 +1,74 @@
+{% include 'index.html' %} 
+
+<style>
+    /* Ẩn các phần của trang chủ để hiển thị nội dung bảng giá */
+    .main-container, .price-section { display: none !important; }
+
+    .price-page-container {
+        padding: 60px 10%;
+        background-color: #fff;
+        min-height: 800px;
+    }
+    .price-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .price-header h1 { color: #0046a7; text-transform: uppercase; }
+    
+    .price-table-styled {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .price-table-styled th {
+        background-color: #0046a7;
+        color: white;
+        padding: 15px;
+        text-align: left;
+    }
+    .price-table-styled td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+    .price-table-styled tr:hover { background-color: #f8f9fa; }
+    .price-amount { color: #da1f26; font-weight: bold; }
+</style>
+
+<div class="price-page-container">
+    <div class="price-header">
+        <h1>Bảng Giá Dịch Vụ Niêm Yết</h1>
+        <p>Cam kết minh bạch - Không phát sinh chi phí</p>
+    </div>
+
+    <table class="price-table-styled">
+        <thead>
+            <tr>
+                <th>Dịch vụ</th>
+                <th>Đơn vị</th>
+                <th>Giá niêm yết (VNĐ)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Khám và tư vấn chuyên sâu</td>
+                <td>Lần</td>
+                <td class="price-amount">Miễn phí</td>
+            </tr>
+            <tr>
+                <td>Bọc răng sứ Zirconia</td>
+                <td>Răng</td>
+                <td class="price-amount">3.500.000</td>
+            </tr>
+            <tr>
+                <td>Trồng răng Implant Hiossen (Mỹ)</td>
+                <td>Trụ</td>
+                <td class="price-amount">17.000.000</td>
+            </tr>
+            <tr>
+                <td>Niềng răng mắc cài kim loại</td>
+                <td>Gói</td>
+                <td class="price-amount">25.000.000</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
