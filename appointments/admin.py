@@ -1,4 +1,5 @@
 from django.contrib import admin
+<<<<<<< HEAD
 from .models import Appointment, Doctor, DoctorSchedule
 
 class DoctorScheduleInline(admin.TabularInline):
@@ -28,3 +29,11 @@ class DoctorScheduleAdmin(admin.ModelAdmin):
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('fullname', 'phone', 'created_at')
     search_fields = ('fullname', 'phone')
+=======
+from .models import Appointment # Hoặc tên Model bạn đã đặt
+
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ('fullname', 'phone', 'created_at') # Hiện các cột này ra danh sách
+    search_fields = ('fullname', 'phone') # Cho phép tìm kiếm theo tên hoặc số ĐT
+>>>>>>> d3a8a7475baba86de2855f00336c928707d882be

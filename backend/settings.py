@@ -53,7 +53,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'doan_db',
         'USER': 'root',
+<<<<<<< HEAD
         'PASSWORD': '292004', # Mật khẩu bạn đã sửa thành root
+=======
+        'PASSWORD': 'nguyen2217', # Mật khẩu bạn đã sửa thành root
+>>>>>>> d3a8a7475baba86de2855f00336c928707d882be
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
