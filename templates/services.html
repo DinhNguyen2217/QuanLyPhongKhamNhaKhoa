@@ -1,0 +1,456 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch Vụ - Nha Khoa 5 Anh Em</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', Arial, sans-serif; background-color: #0d1113; }
+        
+        /* HEADER */
+        .topbar { background-color: #0046a7; color: white; padding: 10px; text-align: center; font-size: 14px; }
+        .so-y-te { background-color: #f7b11c; color: #0046a7; padding: 3px 8px; border-radius: 15px; font-weight: bold; }
+        
+        .header { background-color: #111; color: white; padding: 10px 10%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 99999; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .text-logo-brand { color: #ffffff; font-weight: 700; font-size: 18px; text-transform: uppercase; border-left: 3px solid #da1f26; padding-left: 10px; }
+        
+        .nav-menu { list-style: none; display: flex; gap: 20px; font-size: 14px; text-transform: uppercase; font-weight: 600; margin: 0; padding: 0; }
+        .nav-menu li { position: relative; }
+        .nav-menu li a { color: white; text-decoration: none; padding: 10px 0; display: block; }
+        .dropdown-menu { position: absolute; top: 100%; left: 0; width: 220px; background: #1a1a1a; list-style: none; padding: 10px 0; margin: 0; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 0 0 5px 5px; z-index: 100000; }
+        .dropdown-menu li a { padding: 12px 20px; text-transform: none; font-weight: normal; font-size: 13px; color: #ccc; }
+        .nav-menu li:hover .dropdown-menu { display: block; }
+        
+        .action-btns { display: flex; gap: 10px; }
+        .btn-header { padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 14px; color: white; cursor: pointer; }
+        
+        /* CONTENT */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .page-title { font-size: 48px; color: #0046a7; font-weight: 700; margin-bottom: 10px; text-align: center; }
+        .page-subtitle { font-size: 18px; color: #666; text-align: center; margin-bottom: 50px; }
+        
+        /* SERVICE CARDS */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .service-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        
+        .service-header { background: linear-gradient(135deg, #0046a7 0%, #004FD7 100%); color: white; padding: 30px; text-align: center; }
+        .service-header i { font-size: 50px; margin-bottom: 15px; display: block; }
+        .service-header h3 { font-size: 24px; }
+        
+        .service-content { padding: 30px; }
+        .service-content p { color: #555; line-height: 1.8; margin-bottom: 20px; font-size: 15px; }
+        
+        .service-benefits { margin: 20px 0; }
+        .service-benefits h4 { color: #0046a7; font-size: 16px; margin-bottom: 10px; }
+        .service-benefits ul { list-style: none; padding: 0; }
+        .service-benefits li { color: #666; padding: 5px 0; padding-left: 20px; position: relative; font-size: 14px; }
+        .service-benefits li:before { content: "✓"; position: absolute; left: 0; color: #da1f26; font-weight: bold; }
+        
+        .price-badge { background: #da1f26; color: white; padding: 10px 15px; border-radius: 5px; font-size: 16px; font-weight: bold; margin-top: 15px; display: inline-block; }
+        
+        .btn-service { background: #0046a7; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        .btn-service:hover { background: #da1f26; }
+        
+        /* ADDITIONAL SERVICES */
+        .additional-services { background: #f8f9fa; padding: 50px 0; margin-bottom: 60px; }
+        .additional-services h2 { text-align: center; color: #0046a7; font-size: 36px; margin-bottom: 40px; }
+        .additional-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .additional-service { background: white; padding: 25px; border-radius: 8px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .additional-service i { font-size: 40px; color: #0046a7; margin-bottom: 15px; }
+        .additional-service h4 { color: #333; font-size: 18px; margin-bottom: 10px; }
+        .additional-service p { color: #666; font-size: 14px; line-height: 1.6; }
+        
+        /* TESTIMONIALS */
+        .testimonials-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 0; margin-bottom: 60px; }
+        .testimonials-section h2 { text-align: center; font-size: 36px; margin-bottom: 40px; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .testimonial { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .testimonial-content { font-style: italic; margin-bottom: 20px; font-size: 16px; line-height: 1.6; }
+        .testimonial-author { font-weight: bold; font-size: 14px; color: #f7b11c; }
+        
+        /* FAQ SECTION */
+        .faq-section { background: #f8f9fa; padding: 60px 0; margin-bottom: 60px; }
+        .faq-section h2 { text-align: center; color: #0046a7; font-size: 36px; margin-bottom: 40px; }
+        .faq-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .faq-item { background: white; margin-bottom: 15px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .faq-question { background: #0046a7; color: white; padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .faq-question:hover { background: #003d8a; }
+        .faq-answer { padding: 20px; display: none; color: #555; line-height: 1.6; }
+        .faq-toggle { font-size: 18px; transition: 0.3s; }
+        
+        /* PROMOTIONS */
+        .promotions-section { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); padding: 60px 0; margin-bottom: 60px; }
+        .promotions-section h2 { text-align: center; color: #0046a7; font-size: 36px; margin-bottom: 40px; }
+        .promotions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .promotion-card { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .promotion-badge { background: #da1f26; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; position: absolute; top: 15px; right: 15px; }
+        .promotion-card h3 { color: #0046a7; font-size: 24px; margin: 20px 0; }
+        .promotion-card p { color: #666; line-height: 1.6; margin-bottom: 20px; }
+        .promotion-price { font-size: 28px; font-weight: bold; color: #da1f26; margin: 20px 0; }
+        .promotion-old-price { text-decoration: line-through; color: #999; font-size: 18px; margin-left: 10px; }
+        .btn-promotion { background: linear-gradient(135deg, #0046a7 0%, #da1f26 100%); color: white; border: none; padding: 15px 30px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-promotion:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        
+        /* PROCESS SECTION */
+        .process-section { background: linear-gradient(135deg, #0046a7 0%, #004FD7 100%); color: white; padding: 50px; border-radius: 10px; margin-bottom: 60px; }
+        .process-section h2 { font-size: 36px; margin-bottom: 40px; text-align: center; }
+        
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+        .step { text-align: center; }
+        .step-number { background: #f7b11c; color: #0046a7; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; margin: 0 auto 15px; }
+        .step h4 { font-size: 18px; margin-bottom: 10px; }
+        .step p { font-size: 14px; opacity: 0.9; }
+        
+        /* FOOTER */
+        .footer { background-color: #111; color: white; padding: 40px; margin-top: 60px; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .footer-section h4 { font-size: 16px; margin-bottom: 15px; color: #f7b11c; text-transform: uppercase; }
+        .footer-section p, .footer-section a { font-size: 14px; line-height: 1.8; color: #aaa; text-decoration: none; display: block; margin-bottom: 8px; }
+        .footer-section a:hover { color: white; }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid #333; margin-top: 30px; color: #666; font-size: 14px; }
+        
+        @media (max-width: 768px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        📢 <span class="so-y-te">SỞ Y TẾ</span> Nha Khoa 5 Anh Em tiếp tục <span style="font-weight: bold;">DẪN ĐẦU</span>
+    </div>
+    
+    <div class="header">
+        <a href="/" class="logo">
+            <span class="text-logo-brand">NHA KHOA 5 ANH EM</span>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="{% url 'appointments:about' %}">Giới thiệu</a></li>
+            <li><a href="{% url 'appointments:price_page' %}">Bảng giá</a></li>
+            <li><a href="{% url 'appointments:services' %}">Dịch vụ</a></li>
+            <li><a href="{% url 'appointments:contact' %}">Liên hệ</a></li>
+            <li><a href="{% url 'appointments:doctors_page' %}">Bác sĩ</a></li>
+        </ul>
+        <div class="action-btns">
+            <a href="tel:19006899" class="btn-header" style="background:#0046a7;">📞 1900 6899</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1 class="page-title">Dịch Vụ Nha Khoa</h1>
+        <p class="page-subtitle">Giải pháp nha khoa toàn diện với công nghệ hiện đại</p>
+        
+        <!-- SERVICE CARDS -->
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <i class="fas fa-tooth"></i>
+                    <h3>Bọc Răng Sứ</h3>
+                </div>
+                <div class="service-content">
+                    <p>Phục hình chân ngắn, sứ toàn sĩ với màu sắc gần giống thật, bền vĩnh viễn.</p>
+                    <div class="service-benefits">
+                        <h4>Lợi Ích:</h4>
+                        <ul>
+                            <li>Phục hình cao cấp, bền 10-15 năm</li>
+                            <li>Màu sắc tự nhiên, mỹ thuật hoàn hảo</li>
+                            <li>Không gây dị ứng với nướu</li>
+                            <li>Phục hồi nhanh chóng</li>
+                        </ul>
+                    </div>
+                    <span class="price-badge">200,000 - 500,000₫</span>
+                    <button class="btn-service" onclick="alert('Liên hệ: 1900 6899')">Tư Vấn Ngay</button>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <i class="fas fa-smile"></i>
+                    <h3>Niềng Răng</h3>
+                </div>
+                <div class="service-content">
+                    <p>Chỉnh nha hiện đại với công nghệ Invisalign, mắc cài ý hay jig wire tiên tiến.</p>
+                    <div class="service-benefits">
+                        <h4>Lợi Ích:</h4>
+                        <ul>
+                            <li>Nhiều phương pháp chỉnh nha hiện đại</li>
+                            <li>An toàn, không gây đau đớn</li>
+                            <li>Thời gian chỉnh nha nhanh (12-24 tháng)</li>
+                            <li>Kết quả về ngoài và chức năng</li>
+                        </ul>
+                    </div>
+                    <span class="price-badge">15,000,000 - 30,000,000₫</span>
+                    <button class="btn-service" onclick="alert('Liên hệ: 1900 6899')">Tư Vấn Ngay</button>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <i class="fas fa-spa"></i>
+                    <h3>Implant</h3>
+                </div>
+                <div class="service-content">
+                    <p>Cấy ghép implant đẳng cấp thế giới, giải pháp tối ưu cho mất răng.</p>
+                    <div class="service-benefits">
+                        <h4>Lợi Ích:</h4>
+                        <ul>
+                            <li>Thay thế hoàn toàn chức năng răng tự nhiên</li>
+                            <li>Công nghệ CAD/CAM hiện đại</li>
+                            <li>Thời gian dự kiến 4-6 tháng</li>
+                            <li>Độ bền cao 20+ năm</li>
+                        </ul>
+                    </div>
+                    <span class="price-badge">8,000,000 - 15,000,000₫</span>
+                    <button class="btn-service" onclick="alert('Liên hệ: 1900 6899')">Tư Vấn Ngay</button>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <i class="fas fa-toothbrush"></i>
+                    <h3>Làm Sạch Dental</h3>
+                </div>
+                <div class="service-content">
+                    <p>Vệ sinh miệng chuyên nghiệp với máy siêu âm, loại bỏ cao răng và ố bẩn.</p>
+                    <div class="service-benefits">
+                        <h4>Lợi Ích:</h4>
+                        <ul>
+                            <li>Phòng chống bệnh nha chu</li>
+                            <li>Sáng răng, hôi miệng biến mất</li>
+                            <li>Thời gian thực hiện 30-45 phút</li>
+                            <li>Không đau, an toàn 100%</li>
+                        </ul>
+                    </div>
+                    <span class="price-badge">300,000 - 600,000₫</span>
+                    <button class="btn-service" onclick="alert('Liên hệ: 1900 6899')">Tư Vấn Ngay</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ADDITIONAL SERVICES -->
+        <div class="additional-services">
+            <h2>Dịch Vụ Khác</h2>
+            <div class="additional-grid">
+                <div class="additional-service">
+                    <i class="fas fa-teeth-open"></i>
+                    <h4>Trám Răng</h4>
+                    <p>Khôi phục răng bị sâu, mẻ với vật liệu composite cao cấp, màu sắc tự nhiên.</p>
+                </div>
+                <div class="additional-service">
+                    <i class="fas fa-tooth"></i>
+                    <h4>Răng Sứ Tháo Lắp</h4>
+                    <p>Giải pháp tạm thời cho những trường hợp cần phục hình nhanh chóng.</p>
+                </div>
+                <div class="additional-service">
+                    <i class="fas fa-user-md"></i>
+                    <h4>Điều Trị Nha Chu</h4>
+                    <p>Chăm sóc và điều trị các bệnh về nha chu, viêm lợi, chảy máu chân răng.</p>
+                </div>
+                <div class="additional-service">
+                    <i class="fas fa-child"></i>
+                    <h4>Nha Khoa Trẻ Em</h4>
+                    <p>Dịch vụ nha khoa chuyên biệt cho trẻ em với phương pháp nhẹ nhàng, vui vẻ.</p>
+                </div>
+                <div class="additional-service">
+                    <i class="fas fa-magic"></i>
+                    <h4>Tẩy Trắng Răng</h4>
+                    <p>Làm sáng răng tự nhiên với công nghệ tẩy trắng hiện đại, an toàn.</p>
+                </div>
+                <div class="additional-service">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Phòng Ngừa</h4>
+                    <p>Khám định kỳ, tư vấn chăm sóc răng miệng đúng cách, phòng ngừa bệnh tật.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TESTIMONIALS -->
+        <div class="testimonials-section">
+            <h2>💬 Khách Hàng Nói Gì Về Chúng Tôi</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-content">"Tôi đã điều trị implant tại Nha Khoa 5 Anh Em và rất hài lòng với kết quả. Bác sĩ tận tâm, công nghệ hiện đại, giá cả hợp lý. Răng implant của tôi trông rất tự nhiên!"</div>
+                    <div class="testimonial-author">- Chị Lan Anh, 45 tuổi</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">"Gia đình tôi đã tin tưởng Nha Khoa 5 Anh Em hơn 10 năm. Từ trẻ con đến người lớn, tất cả đều được chăm sóc tốt. Đặc biệt là dịch vụ niềng răng cho con rất chuyên nghiệp."</div>
+                    <div class="testimonial-author">- Anh Minh Tuấn, 38 tuổi</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">"Lần đầu tiên đến đây vì đau răng, nhưng sau khi được tư vấn và điều trị, tôi quyết định làm luôn cả niềng răng. Bác sĩ giải thích rất rõ ràng, không ép buộc gì cả."</div>
+                    <div class="testimonial-author">- Chị Thu Hà, 32 tuổi</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ SECTION -->
+        <div class="faq-section">
+            <h2>Câu Hỏi Thường Gặp</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Implant có đau không?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Quy trình cấy implant được thực hiện dưới gây tê cục bộ nên không gây đau đớn. Sau khi gây tê hết tác dụng, có thể có cảm giác hơi ê nhẹ trong 2-3 ngày đầu, điều này hoàn toàn bình thường và có thể kiểm soát bằng thuốc giảm đau thông thường.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Niềng răng mất bao lâu?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Thời gian niềng răng phụ thuộc vào mức độ sai lệch của răng và phương pháp niềng. Thông thường từ 12-24 tháng. Với công nghệ hiện đại như Invisalign, thời gian có thể rút ngắn hơn.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Bọc răng sứ có bền không?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Răng sứ của chúng tôi có độ bền từ 10-15 năm, thậm chí vĩnh viễn nếu chăm sóc tốt. Chúng tôi sử dụng sứ cao cấp nhập khẩu và công nghệ bọc răng hiện đại.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Chi phí niềng răng bao nhiêu?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Chi phí niềng răng dao động từ 15-30 triệu đồng tùy thuộc vào phương pháp (mắc cài hoặc invisalign) và mức độ phức tạp của ca điều trị. Chúng tôi có nhiều gói thanh toán linh hoạt.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Có bảo hành không?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tất cả dịch vụ của chúng tôi đều có bảo hành. Implant bảo hành 10 năm, răng sứ bảo hành 5 năm, niềng răng bảo hành 2 năm. Ngoài ra còn có chế độ bảo trì định kỳ miễn phí.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PROMOTIONS -->
+        <div class="promotions-section">
+            <h2>🎉 Ưu Đãi Đặc Biệt</h2>
+            <div class="promotions-grid">
+                <div class="promotion-card">
+                    <div class="promotion-badge">GIẢM 30%</div>
+                    <i class="fas fa-tooth" style="font-size: 50px; color: #0046a7;"></i>
+                    <h3>Combo Khám & Làm Sạch</h3>
+                    <p>Khám tổng quát + làm sạch răng chuyên nghiệp chỉ với 450.000đ</p>
+                    <div class="promotion-price">450,000₫ <span class="promotion-old-price">650,000₫</span></div>
+                    <button class="btn-promotion" onclick="alert('Liên hệ: 1900 6899')">Đặt Lịch Ngay</button>
+                </div>
+                <div class="promotion-card">
+                    <div class="promotion-badge">MỚI</div>
+                    <i class="fas fa-smile" style="font-size: 50px; color: #0046a7;"></i>
+                    <h3>Invisalign Cho Học Sinh</h3>
+                    <p>Giảm 20% chi phí niềng răng invisalign cho học sinh, sinh viên</p>
+                    <div class="promotion-price">Liên hệ tư vấn</div>
+                    <button class="btn-promotion" onclick="alert('Liên hệ: 1900 6899')">Tư Vấn Miễn Phí</button>
+                </div>
+                <div class="promotion-card">
+                    <div class="promotion-badge">HOT</div>
+                    <i class="fas fa-gift" style="font-size: 50px; color: #0046a7;"></i>
+                    <h3>Gói Gia Đình</h3>
+                    <p>Giảm 15% khi cả gia đình khám và điều trị cùng lúc</p>
+                    <div class="promotion-price">Giảm 15%</div>
+                    <button class="btn-promotion" onclick="alert('Liên hệ: 1900 6899')">Đăng Ký Nhận Ưu Đãi</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PROCESS -->
+        <div class="process-section">
+            <h2>🔄 Quy Trình Khám & Điều Trị</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Khám Và Tư Vấn</h4>
+                    <p>Bác sĩ khám miệng, chụp X-ray, tư vấn chi tiết phương pháp điều trị phù hợp.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Lên Kế Hoạch</h4>
+                    <p>Lập kế hoạch điều trị cụ thể, báo giá rõ ràng, xác nhận thời gian.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Thực Hiện Điều Trị</h4>
+                    <p>Sử dụng công nghệ hiện đại, điều trị chuyên nghiệp, an toàn tuyệt đối.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Theo Dõi & Chăm Sóc</h4>
+                    <p>Hướng dẫn chăm sóc sau điều trị, theo dõi kết quả, tái khám định kỳ.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Về Chúng Tôi</h4>
+                <a href="{% url 'appointments:about' %}">Giới thiệu</a>
+                <a href="{% url 'appointments:doctors_page' %}">Đội ngũ bác sĩ</a>
+                <a href="#">Chứng chỉ</a>
+            </div>
+            <div class="footer-section">
+                <h4>Dịch Vụ</h4>
+                <a href="{% url 'appointments:services' %}">Tất cả dịch vụ</a>
+                <a href="#">Bọc răng sứ</a>
+                <a href="#">Niềng răng</a>
+                <a href="#">Implant</a>
+            </div>
+            <div class="footer-section">
+                <h4>Liên Hệ</h4>
+                <a href="tel:19006899">📞 1900 6899</a>
+                <a href="mailto:info@nhakhoaem.com">✉️ info@nhakhoaem.com</a>
+                <a href="{% url 'appointments:contact' %}">Địa chỉ & Bản đồ</a>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <a href="https://facebook.com" target="_blank">Facebook</a>
+                <a href="https://youtube.com" target="_blank">YouTube</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Nha Khoa 5 Anh Em. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+            
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                toggle.textContent = '+';
+            } else {
+                answer.style.display = 'block';
+                toggle.textContent = '−';
+            }
+        }
+    </script>
+</body>
+</html>

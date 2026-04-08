@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Đội Ngũ Bác Sĩ | Nha Khoa 5 Anh Em{% endblock %}
+
+{% block extra_css %}
+<style>
+    .doctors-page-container { padding: 80px 10%; min-height: calc(100vh - 220px); background: linear-gradient(180deg, #0c1321 0%, #11151f 100%); color: #e2e8f0; }
+    .page-heading { text-align: center; margin-bottom: 40px; }
+    .page-heading h1 { font-size: 42px; color: #f7b11c; margin-bottom: 10px; }
+    .page-heading p { color: #94a3b8; font-size: 16px; max-width: 760px; margin: 0 auto; }
+    .doctor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+    .doctor-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,0.45); }
+    .doctor-card img { width: 100%; height: 280px; object-fit: cover; }
+    .doctor-info { padding: 30px; }
+    .doctor-name { color: #f7b11c; font-size: 24px; margin-bottom: 10px; text-transform: uppercase; }
+    .doctor-role { color: #60a5fa; font-weight: 700; margin-bottom: 15px; }
+    .doctor-desc { color: #cbd5e1; line-height: 1.8; margin-bottom: 15px; }
+    .doctor-experience { display: flex; gap: 10px; flex-wrap: wrap; color: #94a3b8; font-size: 14px; }
+    .doctor-experience span { background: rgba(255,255,255,0.08); padding: 10px 14px; border-radius: 999px; }
+    .doctor-details { color: #cbd5e1; line-height: 1.8; margin-bottom: 18px; }
+    .schedule-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 18px; margin-top: 15px; }
+    .schedule-box strong { display: block; color: #f7b11c; margin-bottom: 10px; font-size: 15px; }
+    .schedule-box ul { list-style: none; padding: 0; margin: 0; color: #d1d5db; font-size: 14px; line-height: 1.7; }
+    .schedule-box li { margin-bottom: 8px; }
+    .schedule-box li span { display: inline-block; min-width: 120px; color: #fff; }
+    .section-highlight { max-width: 1050px; margin: 50px auto 0; padding: 30px; border-radius: 24px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    .section-highlight h2 { color: #fff; margin-bottom: 20px; font-size: 28px; }
+    .section-highlight p { color: #cbd5e1; line-height: 1.8; }
+    @media (max-width: 900px) { .doctors-page-container { padding: 60px 5%; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="doctors-page-container">
+    <div class="page-heading">
+        <h1>ĐỘI NGŨ BÁC SĨ CHUYÊN NGHIỆP</h1>
+        <p>Những bác sĩ hàng đầu tại Nha Khoa 5 Anh Em với chuyên môn sâu, nhiều năm kinh nghiệm và tinh thần phục vụ tận tâm.</p>
+    </div>
+    <div class="doctor-grid">
+        {% for doctor in doctors %}
+        <div class="doctor-card">
+            <img src="{% if doctor.image_url %}{{ doctor.image_url }}{% else %}{% static 'default-doctor.jpg' %}{% endif %}" alt="{{ doctor.name }}">
+            <div class="doctor-info">
+                <h2 class="doctor-name">{{ doctor.name }}</h2>
+                <div class="doctor-role">{{ doctor.specialty }}</div>
+                <p class="doctor-desc">{{ doctor.experience }}</p>
+                {% if doctor.details %}
+                <p class="doctor-details">{{ doctor.details }}</p>
+                {% endif %}
+                <div class="doctor-experience">
+                    {% for item in doctor.get_highlights %}
+                    <span>{{ item }}</span>
+                    {% endfor %}
+                </div>
+                {% if doctor.schedules.all %}
+                <div class="schedule-box">
+                    <strong>Lịch làm việc</strong>
+                    <ul>
+                        {% for schedule in doctor.schedules.all %}
+                        <li><span>{{ schedule.day }}:</span> {{ schedule.start_time|time:'H:i' }} - {{ schedule.end_time|time:'H:i' }}{% if schedule.notes %} ({{ schedule.notes }}){% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p>Chưa có bác sĩ nào được cấu hình.</p>
+        {% endfor %}
+    </div>
+    <div class="section-highlight">
+        <h2>Tại sao chọn đội ngũ bác sĩ của chúng tôi?</h2>
+        <p>Đội ngũ bác sĩ Nha Khoa 5 Anh Em được tuyển chọn kỹ lưỡng, có chứng chỉ chuyên môn, nhiều năm kinh nghiệm và tinh thần chăm sóc tận tâm. Mỗi ca điều trị được thiết kế riêng, kết hợp công nghệ hiện đại và quy trình vô trùng nghiêm ngặt.</p>
+    </div>
+</div>
+{% endblock %}

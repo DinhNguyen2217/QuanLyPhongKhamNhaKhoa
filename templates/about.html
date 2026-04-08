@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu - Nha Khoa 5 Anh Em</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', Arial, sans-serif; background-color: #0f1725; color: #f3f4f6; }
+        
+        .topbar { background-color: #001f3f; color: #f8fafc; padding: 12px 20px; text-align: center; font-size: 14px; }
+        .so-y-te { background-color: #f7b11c; color: #001f3f; padding: 4px 10px; border-radius: 18px; font-weight: 700; margin-right: 10px; }
+
+        .header { background-color: rgba(0, 10, 25, 0.96); color: white; padding: 16px 8%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .text-logo-brand { color: #ffffff; font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #f7b11c; padding-left: 12px; }
+
+        .nav-menu { list-style: none; display: flex; gap: 26px; font-size: 14px; text-transform: uppercase; font-weight: 600; margin: 0; padding: 0; }
+        .nav-menu li { position: relative; }
+        .nav-menu li a { color: #e2e8f0; text-decoration: none; transition: color 0.2s ease; }
+        .nav-menu li a:hover { color: #f7b11c; }
+
+        .action-btns { display: flex; gap: 10px; }
+        .btn-header { padding: 12px 22px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 14px; color: white; background: linear-gradient(135deg,#f7b11c,#ff7e1b); transition: transform 0.2s ease; }
+        .btn-header:hover { transform: translateY(-2px); }
+        
+        /* CONTENT */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .page-title { font-size: 48px; color: #f7b11c; text-align: center; margin-bottom: 12px; }
+        .page-subtitle { font-size: 18px; color: #cbd5e1; text-align: center; margin-bottom: 50px; max-width: 900px; margin-left: auto; margin-right: auto; }
+        
+        /* ABOUT SECTION */
+        .about-section { background: rgba(15,23,37,0.92); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 50px; margin-bottom: 40px; box-shadow: 0 25px 60px rgba(15,23,37,0.45); }
+        .about-section h2 { font-size: 32px; color: #f7b11c; margin-bottom: 20px; }
+        .about-section p { font-size: 16px; line-height: 1.8; color: #cbd5e1; margin-bottom: 15px; }
+        
+        /* WORKING HOURS */
+        .working-hours { background: linear-gradient(135deg, #0046a7 0%, #004FD7 100%); color: white; padding: 40px; border-radius: 10px; margin-bottom: 40px; }
+        .working-hours h3 { font-size: 28px; margin-bottom: 30px; text-align: center; }
+        .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .hours-item { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #f7b11c; }
+        .hours-item strong { font-size: 18px; display: block; margin-bottom: 10px; }
+        .hours-item span { font-size: 16px; }
+        
+        /* VISION MISSION */
+        .vision-mission { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .vision-box, .mission-box { background: rgba(15,23,37,0.92); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 40px; box-shadow: 0 25px 60px rgba(15,23,37,0.45); }
+        .vision-box h3, .mission-box h3 { font-size: 28px; color: #f7b11c; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .vision-box i, .mission-box i { font-size: 32px; color: #f7b11c; }
+        .vision-box p, .mission-box p { font-size: 16px; line-height: 1.8; color: #cbd5e1; }
+        
+        /* CERTIFICATES */
+        .certificates { background: rgba(15,23,37,0.92); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 40px; box-shadow: 0 25px 60px rgba(15,23,37,0.45); margin-bottom: 40px; }
+        .certificates h3 { font-size: 28px; color: #f7b11c; margin-bottom: 30px; text-align: center; }
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .cert-item { background: linear-gradient(135deg, #0046a7 0%, #004FD7 100%); color: white; padding: 30px; border-radius: 8px; text-align: center; transition: transform 0.3s; }
+        .cert-item:hover { transform: translateY(-10px); }
+        .cert-item i { font-size: 40px; margin-bottom: 15px; display: block; }
+        .cert-item strong { font-size: 16px; display: block; }
+        
+        /* FOOTER */
+        .footer { background: #050816; color: #94a3b8; padding: 42px 24px; margin-top: 20px; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+        .footer-section h4 { font-size: 14px; margin-bottom: 18px; color: #f7b11c; text-transform: uppercase; letter-spacing: 0.08em; }
+        .footer-section p, .footer-section a { font-size: 14px; line-height: 1.8; color: #94a3b8; text-decoration: none; display: block; margin-bottom: 10px; }
+        .footer-section a:hover { color: #fff; }
+        .footer-bottom { text-align: center; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 32px; color: #64748b; font-size: 13px; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; }
+            .nav-menu { flex-direction: column; gap: 10px; }
+            .about-section { padding: 20px; }
+            .hours-grid { grid-template-columns: 1fr; }
+            .vision-mission { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        📢 <span class="so-y-te">SỞ Y TẾ</span> Nha Khoa 5 Anh Em tiếp tục <span style="font-weight: bold;">DẪN ĐẦU</span> Bảng xếp hạng chăm sóc răng miệng.
+    </div>
+    
+    <div class="header">
+        <a href="/" class="logo">
+            <span class="text-logo-brand">NHA KHOA 5 ANH EM</span>
+        </a>
+        <ul class="nav-menu">
+            <li>
+                <a href="{% url 'appointments:about' %}">Giới thiệu</a>
+            </li>
+            <li><a href="{% url 'appointments:price_page' %}">Bảng giá</a></li>
+            <li>
+                <a href="{% url 'appointments:services' %}">Dịch vụ <i class="fas fa-chevron-down"></i></a>
+            </li>
+            <li><a href="{% url 'appointments:contact' %}">Liên hệ</a></li>
+            <li><a href="{% url 'appointments:doctors_page' %}">Bác sĩ</a></li>
+        </ul>
+        <div class="action-btns">
+            <a href="tel:19006899" class="btn-header" style="background:#0046a7;">📞 1900 6899</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1 class="page-title">Giới Thiệu</h1>
+        <p class="page-subtitle">Nha Khoa 5 Anh Em mang đến giải pháp chăm sóc răng miệng chuyên nghiệp, an toàn và thẩm mỹ cho cả gia đình.</p>
+        
+        <!-- ABOUT -->
+        <div class="about-section">
+            <h2>🏥 Về Chúng Tôi</h2>
+            <p>Nha Khoa 5 Anh Em là địa chỉ uy tín tại TP.HCM với hơn 15 năm kinh nghiệm trong lĩnh vực nha khoa thẩm mỹ, chỉnh nha và phục hồi chức năng răng miệng.</p>
+            <p>Phòng khám được đầu tư theo tiêu chuẩn vô trùng, trang bị máy chụp X-quang 3D, công nghệ scan răng kỹ thuật số và hệ thống bàn ghế nha khoa hiện đại giúp tối ưu cả chất lượng điều trị và trải nghiệm khách hàng.</p>
+            <p>Chúng tôi cam kết:</p>
+            <ul>
+                <li>Thăm khám kỹ lưỡng với bác sĩ chuyên môn cao.</li>
+                <li>Chẩn đoán chính xác trước khi điều trị.</li>
+                <li>Liên tục theo dõi và chăm sóc sau dịch vụ.</li>
+            </ul>
+        </div>
+        
+        <!-- WORKING HOURS -->
+        <div class="working-hours">
+            <h3>⏰ Thời Gian Làm Việc</h3>
+            <div class="hours-grid">
+                <div class="hours-item">
+                    <strong>📅 Thứ 2 - Thứ 7</strong>
+                    <span>08:00 - 19:30</span>
+                </div>
+                <div class="hours-item">
+                    <strong>☀️ Chủ Nhật</strong>
+                    <span>08:00 - 16:00</span>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.9;">*Đóng cửa vào ngày Lễ, Tết. Ngoài giờ làm việc, chúng tôi sẽ liên hệ bạn vào 8h-9h sáng hôm sau.</p>
+        </div>
+        
+        <!-- VISION & MISSION -->
+        <div class="vision-mission">
+            <div class="vision-box">
+                <h3><i class="fas fa-eye"></i> Tầm Nhìn</h3>
+                <p>Trở thành cơ sở nha khoa số 1 được tin tưởng và ưa chuộng tại TP.HCM, nổi tiếng với chất lượng dịch vụ xuất sắc và đội ngũ chuyên gia tận tâm.</p>
+            </div>
+            <div class="mission-box">
+                <h3><i class="fas fa-heart"></i> Sứ Mệnh</h3>
+                <p>Cung cấp dịch vụ nha khoa toàn diện, từ phòng ngừa bệnh đến điều trị phức tạp, với tâm tế, chuyên nghiệp, và công nghệ hiện đại nhất.</p>
+            </div>
+        </div>
+        
+        <!-- CERTIFICATES -->
+        <div class="certificates">
+            <h3>🏆 Chứng Chỉ & Giải Thưởng</h3>
+            <div class="cert-grid">
+                <div class="cert-item">
+                    <i class="fas fa-certificate"></i>
+                    <strong>ISO 9001:2015</strong>
+                </div>
+                <div class="cert-item">
+                    <i class="fas fa-medal"></i>
+                    <strong>Top 10 Nha Khoa TP.HCM</strong>
+                </div>
+                <div class="cert-item">
+                    <i class="fas fa-heart"></i>
+                    <strong>Tín Dụng Quốc Gia</strong>
+                </div>
+                <div class="cert-item">
+                    <i class="fas fa-star"></i>
+                    <strong>Sở Y Tế Cấp Phép</strong>
+                </div>
+            </div>
+        </div>
+        
+        <!-- STATS -->
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 22px; margin-top: 20px;">
+            <div style="padding: 25px 24px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                <strong style="display: block; color: #f7b11c; font-size: 28px; margin-bottom: 10px;">15+</strong>
+                <span style="color: #cbd5e1; font-size: 14px; line-height: 1.75;">Năm kinh nghiệm trong ngành nha khoa.</span>
+            </div>
+            <div style="padding: 25px 24px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                <strong style="display: block; color: #f7b11c; font-size: 28px; margin-bottom: 10px;">8.500+</strong>
+                <span style="color: #cbd5e1; font-size: 14px; line-height: 1.75;">Khách hàng hài lòng đã được điều trị.</span>
+            </div>
+            <div style="padding: 25px 24px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                <strong style="display: block; color: #f7b11c; font-size: 28px; margin-bottom: 10px;">120%</strong>
+                <span style="color: #cbd5e1; font-size: 14px; line-height: 1.75;">Tỷ lệ khách hàng tiếp tục sử dụng dịch vụ.</span>
+            </div>
+            <div style="padding: 25px 24px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                <strong style="display: block; color: #f7b11c; font-size: 28px; margin-bottom: 10px;">5</strong>
+                <span style="color: #cbd5e1; font-size: 14px; line-height: 1.75;">Giải pháp nha khoa chính: sứ, cấy ghép, chỉnh nha.</span>
+            </div>
+        </div>
+        
+        <!-- TIMELINE -->
+        <div class="about-section" style="margin-top: 40px;">
+            <h2>Hành Trình Phát Triển</h2>
+            <ul style="list-style: none; padding: 0; margin-top: 18px;">
+                <li style="display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 18px; align-items: flex-start; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                    <div style="color: #f7b11c; font-size: 18px; font-weight: 700;">2010</div>
+                    <div>
+                        <h4 style="font-size: 18px; color: #fff; margin-bottom: 8px;">Khởi đầu với ước mơ</h4>
+                        <p style="color: #cbd5e1; line-height: 1.75; font-size: 15px;">Phòng khám đầu tiên ra đời nhằm phục vụ nhu cầu thẩm mỹ và sức khỏe răng miệng tại TP.HCM.</p>
+                    </div>
+                </li>
+                <li style="display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 18px; align-items: flex-start; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                    <div style="color: #f7b11c; font-size: 18px; font-weight: 700;">2014</div>
+                    <div>
+                        <h4 style="font-size: 18px; color: #fff; margin-bottom: 8px;">Mở rộng dịch vụ chuyên sâu</h4>
+                        <p style="color: #cbd5e1; line-height: 1.75; font-size: 15px;">Đầu tư trang thiết bị hiện đại và phát triển dịch vụ cấy ghép implant, chỉnh nha chuyên sâu.</p>
+                    </div>
+                </li>
+                <li style="display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 18px; align-items: flex-start; padding: 22px 0;">
+                    <div style="color: #f7b11c; font-size: 18px; font-weight: 700;">2023</div>
+                    <div>
+                        <h4 style="font-size: 18px; color: #fff; margin-bottom: 8px;">Nâng tầm trải nghiệm</h4>
+                        <p style="color: #cbd5e1; line-height: 1.75; font-size: 15px;">Phát triển dịch vụ tư vấn trực tuyến, đặt lịch nhanh và chính sách hậu mãi chu đáo.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Về Chúng Tôi</h4>
+                <a href="{% url 'appointments:about' %}">Giới thiệu</a>
+                <a href="{% url 'appointments:doctors_page' %}">Đội ngũ bác sĩ</a>
+                <a href="#">Chứng chỉ</a>
+            </div>
+            <div class="footer-section">
+                <h4>Dịch Vụ</h4>
+                <a href="{% url 'appointments:services' %}">Tất cả dịch vụ</a>
+                <a href="#">Bọc răng sứ</a>
+                <a href="#">Niềng răng</a>
+                <a href="#">Implant</a>
+            </div>
+            <div class="footer-section">
+                <h4>Liên Hệ</h4>
+                <a href="tel:19006899">📞 1900 6899</a>
+                <a href="mailto:info@nhakhoaem.com">✉️ info@nhakhoaem.com</a>
+                <a href="{% url 'appointments:contact' %}">Địa chỉ & Bản đồ</a>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <a href="https://facebook.com/profile.php?id=100084669476709" target="_blank">Facebook</a>
+                <a href="https://youtube.com" target="_blank">YouTube</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Nha Khoa 5 Anh Em. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </div>
+</body>
+</html>

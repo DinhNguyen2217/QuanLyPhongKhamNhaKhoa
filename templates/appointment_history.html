@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lịch Sử Đặt Lịch | Nha Khoa 5 Anh Em{% endblock %}
+
+{% block extra_css %}
+<style>
+    .history-page { padding: 80px 10%; min-height: calc(100vh - 220px); background: #0b1221; color: #e5e7eb; }
+    .history-header { text-align: center; margin-bottom: 40px; }
+    .history-header h1 { font-size: 40px; color: #f8fafc; margin-bottom: 10px; }
+    .history-header p { color: #94a3b8; font-size: 16px; max-width: 760px; margin: 0 auto; }
+    .appointments-grid { display: grid; gap: 20px; }
+    .appointment-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+    .appointment-card h2 { font-size: 22px; color: #f7b11c; margin-bottom: 8px; }
+    .appointment-card .meta { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; color: #cbd5e1; font-size: 14px; }
+    .appointment-card .meta span { background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 999px; }
+    .appointment-card .note { margin-top: 18px; color: #d1d5db; line-height: 1.8; }
+    .empty-state { text-align: center; padding: 50px 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; color: #a1a1aa; }
+    .history-cta { margin-top: 40px; text-align: center; }
+    .history-cta a { display: inline-block; background: linear-gradient(135deg, #0046a7, #da1f26); color: #fff; padding: 14px 30px; border-radius: 999px; text-decoration: none; font-weight: 700; }
+    @media (max-width: 900px) { .history-page { padding: 60px 5%; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="history-page">
+    <div class="history-header">
+        <h1>Lịch sử đặt lịch của bạn</h1>
+        <p>Xem lại các lần đặt lịch đã gửi, bao gồm dịch vụ, chi nhánh và ngày hẹn dự kiến.</p>
+    </div>
+
+    {% if appointments.exists %}
+    <div class="appointments-grid">
+        {% for appointment in appointments %}
+        <div class="appointment-card">
+            <h2>{{ appointment.fullname }} - {{ appointment.service|default:'Chưa chọn dịch vụ' }}</h2>
+            <div class="meta">
+                <span><strong>Chi nhánh:</strong> {{ appointment.branch|default:'Chưa chọn' }}</span>
+                <span><strong>Ngày hẹn:</strong> {{ appointment.appointment_date|default:'Chưa chọn' }}</span>
+                <span><strong>Số điện thoại:</strong> {{ appointment.phone }}</span>
+                <span><strong>Ngày đặt:</strong> {{ appointment.created_at|date:'d/m/Y H:i' }}</span>
+            </div>
+            <div class="note">
+                <strong>Ghi chú:</strong> {{ appointment.note|default:'Không có ghi chú' }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        Hiện chưa có lịch đặt nào. Hãy đặt lịch ngay để chúng tôi hỗ trợ bạn kịp thời.
+    </div>
+    <div class="history-cta">
+        <a href="{% url 'appointments:home_view' %}">Đặt lịch ngay</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

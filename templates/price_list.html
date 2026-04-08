@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Bảng Giá | Nha Khoa 5 Anh Em{% endblock %}
+
+{% block extra_css %}
+<style>
+    .price-page-container { padding: 80px 10%; min-height: calc(100vh - 220px); background-color: #0d1113; color: #f8fafc; }
+    .price-header { text-align: center; margin-bottom: 40px; }
+    .price-header h1 { font-size: 42px; color: #f7b11c; margin-bottom: 10px; }
+    .price-header p { color: #cbd5e1; font-size: 16px; }
+    .price-table { width: 100%; border-collapse: collapse; margin-top: 40px; }
+    .price-table th, .price-table td { padding: 18px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .price-table th { background: rgba(255,255,255,0.08); color: #f8fafc; text-align: left; font-weight: 700; }
+    .price-table td { color: #cbd5e1; vertical-align: top; }
+    .price-table tr:hover { background: rgba(255,255,255,0.04); }
+    .price-label { display: block; font-size: 14px; color: #94a3b8; margin-top: 8px; }
+    .price-amount { color: #fbbf24; font-size: 17px; font-weight: 700; }
+    .price-note { margin-top: 40px; padding: 30px; border-left: 4px solid #f7b11c; background: rgba(247,177,28,0.08); color: #e2e8f0; border-radius: 16px; }
+    .price-note ul { margin-top: 18px; list-style: disc inside; line-height: 1.8; }
+    .cta-box { margin-top: 40px; text-align: center; }
+    .cta-box a { display: inline-block; background: linear-gradient(135deg, #0046a7, #da1f26); color: white; padding: 15px 30px; border-radius: 999px; text-decoration: none; font-weight: 700; transition: transform 0.25s ease; }
+    .cta-box a:hover { transform: translateY(-3px); }
+    @media (max-width: 900px) { .price-page-container { padding: 60px 5%; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="price-page-container">
+    <div class="price-header">
+        <h1>BẢNG GIÁ DỊCH VỤ</h1>
+        <p>Giá niêm yết minh bạch, rõ ràng, không phí ẩn. Chúng tôi cam kết chi phí chính xác sau khi bác sĩ thăm khám.</p>
+    </div>
+    <table class="price-table">
+        <thead>
+            <tr>
+                <th>Dịch vụ</th>
+                <th>Chi tiết</th>
+                <th>Giá niêm yết</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Khám và tư vấn chuyên sâu</td>
+                <td class="price-label">Khám tổng quát, chụp X-quang 3D, lập kế hoạch điều trị chi tiết.</td>
+                <td class="price-amount">Miễn phí</td>
+            </tr>
+            <tr>
+                <td>Bọc răng sứ Zirconia</td>
+                <td class="price-label">Răng sứ cao cấp, độ bền 10-15 năm, thẩm mỹ tự nhiên.</td>
+                <td class="price-amount">3.500.000₫ / răng</td>
+            </tr>
+            <tr>
+                <td>Bọc răng sứ Emax</td>
+                <td class="price-label">Răng sứ thẩm mỹ cao cấp, sáng bóng, cảm giác nhẹ như răng thật.</td>
+                <td class="price-amount">4.500.000₫ / răng</td>
+            </tr>
+            <tr>
+                <td>Trồng răng Implant Hiossen</td>
+                <td class="price-label">Implant Mỹ chất lượng cao, bảo hành trọn đời, phục hồi chức năng mạnh mẽ.</td>
+                <td class="price-amount">17.000.000₫ / trụ</td>
+            </tr>
+            <tr>
+                <td>Trồng răng Implant Dentium</td>
+                <td class="price-label">Implant Hàn Quốc, chất lượng tốt, phù hợp ngân sách.</td>
+                <td class="price-amount">12.000.000₫ / trụ</td>
+            </tr>
+            <tr>
+                <td>Niềng răng mắc cài kim loại</td>
+                <td class="price-label">Phương án niềng truyền thống, hiệu quả cao, phù hợp nhiều ca khó.</td>
+                <td class="price-amount">25.000.000₫ / gói</td>
+            </tr>
+            <tr>
+                <td>Niềng răng mắc cài sứ</td>
+                <td class="price-label">Niềng thẩm mỹ, ít lộ mắc cài, phù hợp khách hàng quan tâm vẻ ngoài.</td>
+                <td class="price-amount">35.000.000₫ / gói</td>
+            </tr>
+            <tr>
+                <td>Niềng răng Invisalign</td>
+                <td class="price-label">Niềng nhựa trong suốt không mắc cài, thoải mái và thẩm mỹ cao.</td>
+                <td class="price-amount">80.000.000₫ / gói</td>
+            </tr>
+            <tr>
+                <td>Làm sạch răng chuyên nghiệp</td>
+                <td class="price-label">Vệ sinh răng miệng, cạo vôi, làm bóng răng, giảm hôi miệng.</td>
+                <td class="price-amount">500.000₫ / lần</td>
+            </tr>
+            <tr>
+                <td>Điều trị tủy</td>
+                <td class="price-label">Điều trị viêm tủy, bảo tồn răng, tiếp tục phục hình sau điều trị.</td>
+                <td class="price-amount">1.500.000₫ / răng</td>
+            </tr>
+            <tr>
+                <td>Nhổ răng khôn</td>
+                <td class="price-label">Nhổ răng khôn phức tạp, chăm sóc sau nhổ, giảm ê 30%.</td>
+                <td class="price-amount">2.000.000₫ / răng</td>
+            </tr>
+            <tr>
+                <td>Hàn răng composite</td>
+                <td class="price-label">Phục hồi răng sâu, răng sứt mẻ bằng vật liệu thẩm mỹ.</td>
+                <td class="price-amount">800.000₫ / răng</td>
+            </tr>
+            <tr>
+                <td>Răng giả tháo lắp</td>
+                <td class="price-label">Giải pháp tháo lắp nhanh chóng, phù hợp người lớn tuổi.</td>
+                <td class="price-amount">3.000.000₫ / hàm</td>
+            </tr>
+            <tr>
+                <td>Chỉnh nha trẻ em</td>
+                <td class="price-label">Niềng răng sớm cho trẻ em, định hình hàm, tránh phẫu thuật sau này.</td>
+                <td class="price-amount">20.000.000₫ / gói</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="price-note">
+        <h2>Ghi chú quan trọng</h2>
+        <ul>
+            <li>Giá có thể thay đổi tùy theo mức độ phức tạp của ca điều trị và tình trạng răng thực tế.</li>
+            <li>Giá trên đã bao gồm VAT, vật liệu và công tác điều trị cơ bản.</li>
+            <li>Chúng tôi hỗ trợ trả góp 0% cho các gói niềng răng và implant.</li>
+            <li>Các dịch vụ đều đi kèm bảo hành theo chính sách phòng khám.</li>
+            <li>Khuyến mãi dành cho khách hàng cũ, học sinh/sinh viên và gia đình.</li>
+        </ul>
+    </div>
+    <div class="cta-box">
+        <a href="{% url 'appointments:contact' %}">Liên hệ tư vấn ngay</a>
+    </div>
+</div>
+{% endblock %}
