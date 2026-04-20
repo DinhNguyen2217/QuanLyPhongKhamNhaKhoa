@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Bảng điều khiển quản trị{% endblock %}
+{% block content %}
+<section class="dashboard-hero mb-4">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-8">
+            <span class="badge text-bg-light text-dark mb-3">Khu vực quản trị</span>
+            <h1 class="h2 fw-bold mb-2">Bảng điều khiển phòng khám</h1>
+            <p class="mb-0 opacity-75">Theo dõi nhanh hoạt động của hệ thống, quản lý lịch bác sĩ theo lưới và xem lịch hẹn mới nhất bằng giao diện dễ trình bày với giảng viên hơn.</p>
+        </div>
+        <div class="col-lg-4">
+            <div class="admin-hint">Theo dõi nhanh hoạt động hệ thống và quản lý lịch bác sĩ theo tuần.</div>
+        </div>
+    </div>
+</section>
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl"><div class="stat-card h-100"><div class="muted mb-2">Người dùng</div><div class="stat-number">{{ user_count }}</div></div></div>
+    <div class="col-sm-6 col-xl"><div class="stat-card h-100"><div class="muted mb-2">Bác sĩ</div><div class="stat-number">{{ doctor_count }}</div></div></div>
+    <div class="col-sm-6 col-xl"><div class="stat-card h-100"><div class="muted mb-2">Dịch vụ</div><div class="stat-number">{{ service_count }}</div></div></div>
+    <div class="col-sm-6 col-xl"><div class="stat-card h-100"><div class="muted mb-2">Lịch hẹn</div><div class="stat-number">{{ appointment_count }}</div></div></div>
+</div>
+<div class="row g-4 mb-4">
+    <div class="col-lg-5">
+        <div class="card p-4 h-100">
+            <h4 class="fw-bold mb-3">Truy cập nhanh</h4>
+            <div class="d-grid gap-3">
+                <a class="quick-link" href="{% url 'dashboard:doctor_schedule_manage' %}"><span><strong>Lịch bác sĩ dạng lưới</strong><br><span class="muted small">Tick trực tiếp ca sáng và chiều theo từng ngày</span></span><i class="bi bi-calendar-week"></i></a>
+                <a class="quick-link" href="/admin/"><span><strong>Trang quản trị dữ liệu</strong><br><span class="muted small">Quản lý tài khoản quản trị, bác sĩ, dịch vụ và lịch hẹn</span></span><i class="bi bi-arrow-right"></i></a>
+                <a class="quick-link" href="/appointments/book/"><span><strong>Đi tới màn hình đặt lịch</strong><br><span class="muted small">Kiểm tra trải nghiệm phía khách hàng</span></span><i class="bi bi-arrow-right"></i></a>
+                <a class="quick-link" href="/doctors/"><span><strong>Xem danh sách bác sĩ</strong><br><span class="muted small">Kiểm tra thông tin hồ sơ và lịch làm việc</span></span><i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card p-4 h-100">
+            <h4 class="fw-bold mb-3">Lịch hẹn mới nhất</h4>
+            <div class="table-soft">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Khách hàng</th><th>Dịch vụ</th><th>Bác sĩ</th><th>Ngày khám</th><th>Trạng thái</th></tr></thead>
+                    <tbody>
+                    {% for item in latest_appointments %}
+                    <tr>
+                        <td>{{ item.full_name }}</td>
+                        <td>{{ item.service.name }}</td>
+                        <td>{{ item.doctor|default:'Chưa gán' }}</td>
+                        <td>{{ item.appointment_date }}</td>
+                        <td><span class="badge text-bg-light border">{{ item.get_status_display }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5">Chưa có lịch hẹn.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card p-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+        <h4 class="fw-bold mb-0">Bác sĩ nổi bật trong hệ thống</h4>
+        <a class="btn btn-outline-primary rounded-pill" href="/doctors/">Xem toàn bộ</a>
+    </div>
+    <div class="row g-3">
+        {% for doctor in doctor_cards %}
+        <div class="col-md-6 col-xl-4">
+            <div class="card border-0 bg-light-subtle p-3 h-100">
+                <div class="fw-bold">{{ doctor }}</div>
+                <div class="small text-secondary mb-2">{{ doctor.position }}</div>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge text-bg-light border">{{ doctor.qualification }}</span>
+                    <span class="badge text-bg-light border">{{ doctor.years_of_experience }} năm KN</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="mb-0">Chưa có dữ liệu bác sĩ.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

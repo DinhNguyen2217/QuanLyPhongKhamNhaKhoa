@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Hồ sơ{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card p-4 form-shell">
+            <h2 class="section-title h3 mb-3">Hồ sơ khách hàng</h2>
+            <form method="post" novalidate class="live-validate-form">{% csrf_token %}
+                {% if form.non_field_errors %}<div class="form-error-box">{% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}</div>{% endif %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Số điện thoại</label>
+                    <input type="text" id="id_profile_phone" name="phone" class="form-control" value="{{ request.user.phone }}" pattern="^(0|\+84)\d{9,10}$" data-label="Số điện thoại" required>
+                    <div class="field-errors" data-error-for="id_profile_phone"></div>
+                </div>
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">{{ field.label }}</label>
+                    {{ field }}
+                    <div class="field-errors" data-error-for="{{ field.id_for_label }}">{% if field.errors %}{{ field.errors|join:', ' }}{% endif %}</div>
+                </div>
+                {% endfor %}
+                <button class="btn btn-primary rounded-pill px-4">Lưu thay đổi</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

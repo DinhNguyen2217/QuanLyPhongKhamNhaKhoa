@@ -1,0 +1,25 @@
+{% extends 'doctor_base.html' %}
+{% block title %}Lịch hẹn bác sĩ{% endblock %}
+{% block content %}
+<h2>Lịch hẹn của bác sĩ</h2>
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% else %}
+<table class="table table-bordered bg-white">
+    <thead><tr><th>Khách</th><th>Dịch vụ</th><th>Ngày</th><th>Ca</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+    {% for item in appointments %}
+    <tr>
+        <td>{{ item.full_name }}</td>
+        <td>{{ item.service.name }}</td>
+        <td>{{ item.appointment_date }}</td>
+        <td>{{ item.get_shift_display }}</td>
+        <td>{{ item.get_status_display }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Chưa có lịch hẹn.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

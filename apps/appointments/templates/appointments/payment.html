@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load money_filters %}
+{% block title %}Thanh toán xác nhận lịch{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+    <div class="card p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+            <div>
+                <span class="info-badge mb-3">Thanh toán xác nhận lịch</span>
+                <h2 class="section-title h3 mb-2">Thanh toán tiền cọc</h2>
+                <p class="muted mb-0">Quét mã QR bằng điện thoại để mô phỏng thanh toán. Sau khi xác nhận thanh toán trên điện thoại, hệ thống sẽ tự động xác nhận lịch hẹn.</p>
+            </div>
+            <div class="highlight-box text-center">
+                <div class="muted small">Số tiền cọc</div>
+                <div class="h3 fw-bold text-primary mb-0">{{ appointment.deposit_amount|vnd }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card p-4 h-100">
+                <h5 class="fw-bold mb-3">Thông tin lịch hẹn</h5>
+                <div class="d-grid gap-2 muted">
+                    <div><strong>Mã lịch:</strong> #{{ appointment.id }}</div>
+                    <div><strong>Khách hàng:</strong> {{ appointment.full_name }}</div>
+                    <div><strong>Dịch vụ:</strong> {{ appointment.service.name }}</div>
+                    <div><strong>Ngày khám:</strong> {{ appointment.appointment_date }} - {{ appointment.get_shift_display }}</div>
+                    <div><strong>Bác sĩ:</strong> {{ appointment.doctor.display_name }}</div>
+                </div>
+                <div class="alert alert-danger mt-4 mb-0 rounded-4">Tiền cọc sẽ không hoàn trả nếu bạn đặt và không sử dụng dịch vụ.</div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card p-4 form-shell h-100 text-center">
+                <h5 class="fw-bold mb-3">Quét mã QR để thanh toán</h5>
+                {% if payment_data.qr_image %}
+                    <img src="data:image/png;base64,{{ payment_data.qr_image }}" alt="QR thanh toán" class="img-fluid rounded-4 border p-2 bg-white mb-3" style="max-width: 280px;">
+                {% endif %}
+                <div class="small text-secondary mb-3">Dùng điện thoại quét mã QR hoặc mở liên kết giả lập bên dưới để hoàn tất thanh toán.</div>
+                <a href="{{ payment_data.pay_url }}" target="_blank" class="btn btn-success rounded-pill px-4 w-100 mb-2">Mở trang thanh toán trên điện thoại</a>
+                <div class="small text-break text-secondary">Mã giao dịch: {{ payment_data.order_id }}</div>
+                <div id="payment-status-box" class="alert alert-warning rounded-4 mt-4 mb-0">Đang chờ xác nhận thanh toán...</div>
+            </div>
+        </div>
+    </div>
+</div></div>
+<script>
+(function () {
+    const statusUrl = "{% url 'appointments:payment_status' appointment.pk %}";
+    const box = document.getElementById('payment-status-box');
+    let done = false;
+
+    async function pollStatus() {
+        if (done) return;
+        try {
+            const response = await fetch(statusUrl, {headers: {'X-Requested-With': 'XMLHttpRequest'}});
+            if (!response.ok) return;
+            const data = await response.json();
+            if (data.is_paid) {
+                done = true;
+                box.className = 'alert alert-success rounded-4 mt-4 mb-0';
+                box.innerHTML = 'Thanh toán thành công. Lịch hẹn đã được xác nhận. Đang chuyển sang lịch sử đặt lịch...';
+                setTimeout(() => {
+                    window.location.href = "{% url 'appointments:history' %}";
+                }, 1500);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    setInterval(pollStatus, 3000);
+    pollStatus();
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}{{ service.name }}{% endblock %}
+{% block content %}
+<h2>{{ service.name }}</h2>
+<p>{{ service.short_description }}</p>
+<div class="row">
+    <div class="col-md-6"><div class="card card-body"><h5>Quy trình</h5><p>{{ service.process|linebreaks }}</p></div></div>
+    <div class="col-md-6"><div class="card card-body"><h5>Lợi ích</h5><p>{{ service.benefits|linebreaks }}</p></div></div>
+</div>
+{% endblock %}

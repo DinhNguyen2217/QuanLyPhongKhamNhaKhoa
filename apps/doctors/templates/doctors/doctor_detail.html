@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}{{ doctor.display_name }}{% endblock %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card p-4 h-100">
+            <div class="text-center mb-3">
+                {% if doctor.avatar %}
+                    <img src="{{ doctor.avatar.url }}" alt="{{ doctor.display_name }}" class="doctor-avatar doctor-avatar-lg">
+                {% else %}
+                    <div class="icon-bubble mx-auto"><i class="bi bi-person-badge"></i></div>
+                {% endif %}
+            </div>
+            <h2 class="h3 fw-bold text-center">{{ doctor.display_name }}</h2>
+            <div class="muted text-center mb-3">{{ doctor.position }}</div>
+            <div class="d-grid gap-2">
+                <div class="metric-pill">Tuổi: {{ doctor.age }}</div>
+                <div class="metric-pill">Kinh nghiệm: {{ doctor.years_of_experience }} năm</div>
+                <div class="metric-pill">Trình độ: {{ doctor.qualification }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card p-4 mb-4">
+            <h4 class="fw-bold mb-3">Thông tin chuyên môn</h4>
+            <p><strong>Thành tựu:</strong> {{ doctor.achievement|default:'Chưa cập nhật' }}</p>
+            <p class="mb-0"><strong>Giới thiệu:</strong> {{ doctor.bio|default:'Chưa cập nhật' }}</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6"><div class="card p-4 h-100"><h5 class="fw-bold mb-3">Dịch vụ phụ trách</h5><ul class="mb-0">{% for service in doctor.services.all %}<li>{{ service.name }}</li>{% empty %}<li>Chưa có dữ liệu</li>{% endfor %}</ul></div></div>
+            <div class="col-md-6"><div class="card p-4 h-100"><h5 class="fw-bold mb-3">Lịch làm việc</h5><ul class="mb-0">{% for item in doctor.schedules.all %}<li>{{ item.get_weekday_display }} - {{ item.get_shift_display }}</li>{% empty %}<li>Chưa có lịch</li>{% endfor %}</ul></div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

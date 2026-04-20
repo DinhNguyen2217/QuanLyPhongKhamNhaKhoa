@@ -1,0 +1,44 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<div class="schedule-bulk-shell">
+    <div class="schedule-bulk-card">
+        <div class="schedule-bulk-head">
+            <div>
+                <h1>Xếp lịch cho từng bác sĩ</h1>
+                <p>Chọn một bác sĩ, nhiều ngày trong tuần và ca làm việc.</p>
+            </div>
+            <a href="{% url 'admin:doctors_doctorschedule_changelist' %}" class="button admin-pill admin-pill-secondary">Quay lại danh sách lịch</a>
+        </div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="errornote">{{ form.non_field_errors }}</div>
+            {% endif %}
+            <div class="form-grid-admin">
+                <div class="form-grid-admin-full">
+                    <label>{{ form.doctor.label }}</label>
+                    {{ form.doctor }}
+                    {% if form.doctor.help_text %}<div class="help">{{ form.doctor.help_text }}</div>{% endif %}
+                    {% for error in form.doctor.errors %}<div class="errornote">{{ error }}</div>{% endfor %}
+                </div>
+                <div>
+                    <label>{{ form.weekdays.label }}</label>
+                    <div class="checkbox-grid">{{ form.weekdays }}</div>
+                    {% for error in form.weekdays.errors %}<div class="errornote">{{ error }}</div>{% endfor %}
+                </div>
+                <div>
+                    <label>{{ form.shifts.label }}</label>
+                    <div class="checkbox-grid checkbox-grid-compact">{{ form.shifts }}</div>
+                    {% for error in form.shifts.errors %}<div class="errornote">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="form-grid-admin-full">
+                    <label class="checkbox-inline">{{ form.replace_existing }} {{ form.replace_existing.label }}</label>
+                </div>
+            </div>
+            <div class="submit-row"><input type="submit" value="Lưu lịch làm việc" class="default"></div>
+        </form>
+    </div>
+</div>
+{% endblock %}

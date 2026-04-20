@@ -1,0 +1,58 @@
+{% extends 'doctor_base.html' %}
+{% load dict_extras %}
+{% block title %}Cổng bác sĩ{% endblock %}
+{% block content %}
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% else %}
+<div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+    <div>
+        <h2 class="section-title h3 mb-1">Lịch làm việc của tôi</h2>
+        <div class="text-secondary">{{ doctor.display_name }} · {{ doctor.services_display }}</div>
+    </div>
+</div>
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card p-4 h-100">
+            <h5 class="fw-bold mb-3">Lịch trong tuần</h5>
+            <div class="d-grid gap-2">
+                {% for day in days %}
+                <div class="border rounded-4 p-3">
+                    <div class="fw-semibold mb-2">{{ day|date:'l - d/m' }}</div>
+                    {% for item in schedule_map|get_item:day.weekday %}
+                        <span class="badge text-bg-info me-1">{{ item.get_shift_display }}</span>
+                    {% empty %}
+                        <span class="text-secondary small">Không trực</span>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card p-4 h-100">
+            <h5 class="fw-bold mb-3">Danh sách bệnh nhân đã đặt lịch</h5>
+            <div class="table-soft">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Khách</th><th>Dịch vụ</th><th>Ngày</th><th>Ca</th><th>Ghi chú</th><th>Trạng thái</th></tr></thead>
+                    <tbody>
+                    {% for item in appointments %}
+                    <tr>
+                        <td>{{ item.full_name }}</td>
+                        <td>{{ item.service.name }}</td>
+                        <td>{{ item.appointment_date }}</td>
+                        <td>{{ item.get_shift_display }}</td>
+                        <td>{{ item.symptom|default:'-' }}</td>
+                        <td><span class="badge text-bg-light border">{{ item.get_status_display }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6">Chưa có lịch hẹn.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Đặt lịch khám{% endblock %}
+{% block content %}
+<div class="row g-4 justify-content-center">
+    <div class="col-lg-8">
+        <div class="card p-4 form-shell">
+            <h2 class="section-title h3 mb-3">Đăng ký lịch khám</h2>
+            <form method="post" novalidate id="booking-form" class="live-validate-form">{% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="form-error-box">{% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}</div>
+                {% endif %}
+                <div class="row g-3">
+                    {% for field in form %}
+                    <div class="col-md-6 {% if field.name == 'symptom' or field.name == 'assignment_mode' %}col-12{% endif %}" {% if field.name == 'doctor' %}id="doctor-select-wrapper"{% endif %}>
+                        <label class="form-label fw-semibold">{{ field.label }}</label>
+                        {{ field }}
+                        <div class="field-errors" data-error-for="{{ field.id_for_label }}">{% if field.errors %}{{ field.errors|join:', ' }}{% endif %}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mt-4" id="doctor-availability-wrapper">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="fw-bold mb-0">Bác sĩ còn trống lịch</h5>
+                        <span class="small text-secondary">Lưu ý: Xem lịch làm việc của bác sĩ trước khi đặt lịch</span>
+                    </div>
+                    <div id="doctor-availability-grid" class="availability-grid">
+                        {% for item in availability_cards %}
+                        <div class="availability-card {% if item.available %}available{% else %}full{% endif %}">
+                            <div class="fw-semibold">{{ item.name }}</div>
+                            <div class="small">{{ item.booked_count }}/{{ item.capacity }} bệnh nhân</div>
+                            <div class="small text-secondary">{{ item.services }}</div>
+                        </div>
+                        {% empty %}
+                        <div class="text-secondary small">Chọn dịch vụ, ngày khám và ca khám để xem bác sĩ trống lịch.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="btn btn-primary rounded-pill px-4 mt-4">Tạo yêu cầu đặt lịch</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function() {
+  const service = document.getElementById('id_service');
+  const appointmentDate = document.getElementById('id_appointment_date');
+  const shift = document.getElementById('id_shift');
+  const doctorSelect = document.getElementById('id_doctor');
+  const modeInputs = document.querySelectorAll('input[name="assignment_mode"]');
+  const grid = document.getElementById('doctor-availability-grid');
+  if (!service || !appointmentDate || !shift || !doctorSelect || !grid) return;
+
+  function syncDoctorVisibility() {
+    const mode = document.querySelector('input[name="assignment_mode"]:checked')?.value || 'random';
+    const wrapper = document.getElementById('doctor-select-wrapper'); if (wrapper) wrapper.style.display = mode === 'manual' ? '' : 'none';
+  }
+
+  async function loadAvailability() {
+    if (!service.value || !appointmentDate.value || !shift.value) {
+      grid.innerHTML = '<div class="text-secondary small">Chọn dịch vụ, ngày khám và ca khám để xem bác sĩ trống lịch.</div>';
+      doctorSelect.innerHTML = '<option value="">-----Chọn bác sĩ-----</option>';
+      return;
+    }
+    const url = `{% url 'appointments:availability' %}?service=${service.value}&appointment_date=${appointmentDate.value}&shift=${shift.value}`;
+    const resp = await fetch(url, {headers: {'X-Requested-With': 'XMLHttpRequest'}});
+    const data = await resp.json();
+    doctorSelect.innerHTML = '<option value="">-----Chọn bác sĩ-----</option>';
+    if (!data.items.length) {
+      grid.innerHTML = '<div class="text-danger small">Không có bác sĩ phù hợp cho thời gian này.</div>';
+      return;
+    }
+    grid.innerHTML = '';
+    data.items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = `availability-card ${item.available ? 'available' : 'full'}`;
+      card.innerHTML = `<div class="fw-semibold">${item.name}</div><div class="small">${item.booked}/${item.capacity} bệnh nhân</div><div class="small text-secondary">${item.services || ''}</div>`;
+      grid.appendChild(card);
+      if (item.available) {
+        const opt = document.createElement('option');
+        opt.value = item.id;
+        opt.textContent = `${item.name} (${item.booked}/${item.capacity})`;
+        doctorSelect.appendChild(opt);
+      }
+    });
+  }
+  [service, appointmentDate, shift].forEach(el => el.addEventListener('change', loadAvailability));
+  modeInputs.forEach(el => el.addEventListener('change', syncDoctorVisibility));
+  syncDoctorVisibility();
+  loadAvailability();
+})();
+</script>
+{% endblock %}
