@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đang xử lý thanh toán</title>
+    <style>
+        body{font-family:Arial,sans-serif;background:#f8fafc;margin:0;padding:24px;color:#0f172a;display:flex;align-items:center;justify-content:center;min-height:100vh}
+        .wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:18px;padding:28px;box-shadow:0 10px 30px rgba(15,23,42,.08);text-align:center}
+        .muted{color:#64748b}.price{font-size:32px;font-weight:700;color:#0d6efd}.spinner{width:42px;height:42px;border:4px solid #dbeafe;border-top-color:#16a34a;border-radius:50%;margin:0 auto 18px;animation:spin .8s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .btn{display:inline-block;margin-top:16px;padding:12px 18px;border:none;border-radius:999px;background:#16a34a;color:#fff;font-size:16px;font-weight:700;text-decoration:none}
+        .meta{background:#f8fafc;border-radius:14px;padding:14px 16px;margin:18px 0;text-align:left}.meta div{margin:6px 0}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        {% if already_paid %}
+            <h2 style="margin:0 0 8px;">Thanh toán đã hoàn tất</h2>
+            <div class="muted">Giao dịch này đã được xác nhận trước đó.</div>
+            <a class="btn" href="{{ success_url }}">Xem kết quả</a>
+        {% else %}
+            <div class="spinner"></div>
+            <h2 style="margin:0 0 8px;">Đang xử lý thanh toán giả lập</h2>
+            <div class="muted">Hệ thống đang xác nhận giao dịch cho lịch khám của bạn.</div>
+            <div class="meta">
+                <div><strong>Mã giao dịch:</strong> {{ payment.transaction_code }}</div>
+                <div><strong>Dịch vụ:</strong> {{ appointment.service.name }}</div>
+                <div><strong>Ngày khám:</strong> {{ appointment.appointment_date }} - {{ appointment.get_shift_display }}</div>
+            </div>
+            <div class="price">{{ payment.amount|floatformat:0 }} VNĐ</div>
+            <div class="muted" style="margin-top:10px;">Bạn sẽ được chuyển sang màn hình thành công trong giây lát...</div>
+            <script>
+                setTimeout(function () {
+                    window.location.href = "{{ confirm_url }}";
+                }, 1200);
+            </script>
+            <noscript><a class="btn" href="{{ confirm_url }}">Tiếp tục xác nhận thanh toán</a></noscript>
+        {% endif %}
+    </div>
+</body>
+</html>

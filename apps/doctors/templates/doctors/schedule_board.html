@@ -1,0 +1,55 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block object-tools-items %}
+    <li><a href="{{ bulk_add_url }}" class="addlink">Xếp lịch bác sĩ</a></li>
+    {{ block.super }}
+{% endblock %}
+
+{% block content_title %}
+    <h1>Lịch làm việc bác sĩ</h1>
+{% endblock %}
+
+{% block result_list %}
+    <div class="schedule-summary-card">
+        <div class="schedule-summary-head">
+            <div>
+                <h2>Tổng quan lịch làm việc theo bác sĩ</h2>
+                <p class="schedule-summary-subtitle">Theo dõi nhanh số ca trực và các ca làm việc đã áp dụng cho từng bác sĩ.</p>
+            </div>
+            <a class="button admin-pill" href="{{ bulk_add_url }}">Thêm / cập nhật lịch</a>
+        </div>
+
+        <div class="schedule-overview-grid">
+            {% for row in schedule_matrix %}
+                <div class="schedule-service-card">
+                    <div class="schedule-card-top">
+                        <div>
+                            <h3>{{ row.doctor.display_name }}</h3>
+                            <div class="schedule-service-meta">{{ row.doctor.services_display }}</div>
+                        </div>
+
+                        <div class="schedule-count-box">
+                            <span>Số ca đang có</span>
+                            <strong>{{ row.count }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="schedule-badge-list">
+                        {% if row.items %}
+                            {% for sch in row.items %}
+                                <span class="schedule-badge">{{ sch.get_weekday_display }} · {{ sch.get_shift_display }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="schedule-empty">Chưa có lịch</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="schedule-empty">Chưa có bác sĩ để xếp lịch.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {{ block.super }}
+{% endblock %}

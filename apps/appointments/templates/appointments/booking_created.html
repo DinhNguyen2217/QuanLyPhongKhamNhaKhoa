@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load money_filters %}
+{% block title %}Đã tạo yêu cầu đặt lịch{% endblock %}
+{% block content %}
+<div class="row g-4 justify-content-center">
+    <div class="col-lg-8">
+        <div class="card p-4 p-lg-5">
+            <h1 class="section-title h3 mb-3">Đặt lịch thành công</h1>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6"><div class="metric-pill h-100"><strong>Dịch vụ:</strong> {{ appointment.service.name }}</div></div>
+                <div class="col-md-6"><div class="metric-pill h-100"><strong>Ngày khám:</strong> {{ appointment.appointment_date }} - {{ appointment.get_shift_display }}</div></div>
+                <div class="col-md-6"><div class="metric-pill h-100"><strong>Bác sĩ:</strong> {{ appointment.doctor.display_name }}</div></div>
+                <div class="col-md-6"><div class="metric-pill h-100"><strong>Tiền cọc:</strong> {{ appointment.deposit_amount|vnd }}</div></div>
+            </div>
+            <div class="alert alert-primary rounded-4 mb-4">Email xác nhận đã được gửi tới <strong>{{ appointment.email }}</strong>.</div>
+            <div class="d-flex flex-wrap gap-3">
+                <a href="{% url 'appointments:history' %}" class="btn btn-outline-secondary rounded-pill px-4">Lịch sử đặt lịch</a>
+                <a href="/" class="btn btn-primary rounded-pill px-4">Về trang chủ</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
