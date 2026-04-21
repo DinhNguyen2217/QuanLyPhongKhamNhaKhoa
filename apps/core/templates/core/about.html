@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Giới thiệu{% endblock %}
+
+{% block content %}
+<section class="about-page text-center">
+    
+    <h1 class="section-title mb-4">Giới thiệu phòng khám nha khoa</h1>
+
+
+
+    <p class="section-subtitle about-desc mx-auto mb-4">
+        Phòng khám nha khoa được xây dựng theo định hướng hiện đại, sử dụng những thiết bị hiện đại nhất, những quy trình điều trị tiên tiến nhất, những bác sĩ giỏi nhất để phục vụ khách hàng. Website giúp khách hàng dễ dàng tìm hiểu dịch vụ, xem bác sĩ, tra cứu thời gian làm việc và chủ động đặt lịch khám nhanh chóng, thuận tiện hơn.
+    </p>
+
+    <div class="about-image-wrap mb-4">
+        <img src="{% static 'images/5bacsi.jpg' %}" alt="Đội ngũ bác sĩ" class="about-image">
+    </div>    
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card feature-card about-mini-card p-3 h-100">
+                <div class="icon-bubble mb-2 mx-auto"><i class="bi bi-bullseye"></i></div>
+                <h5 class="mb-2">Mục tiêu</h5>
+                <p class="muted mb-0">
+                    Tối ưu quy trình đặt lịch, giảm thao tác thủ công và giúp khách hàng chủ động hơn khi lựa chọn ngày khám, ca khám và bác sĩ.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card feature-card about-mini-card p-3 h-100">
+                <div class="icon-bubble mb-2 mx-auto"><i class="bi bi-award"></i></div>
+                <h5 class="mb-2">Cam kết</h5>
+                <p class="muted mb-0">
+                    Cung cấp thông tin rõ ràng, minh bạch về dịch vụ, bảng giá, bác sĩ và lịch hẹn để khách hàng dễ theo dõi và lựa chọn.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card feature-card about-mini-card p-3 h-100">
+                <div class="icon-bubble mb-2 mx-auto"><i class="bi bi-clipboard2-pulse"></i></div>
+                <h5 class="mb-2">Kết quả mong muốn</h5>
+                <p class="muted mb-0">
+                    Xây dựng hệ thống đặt lịch nhanh, chính xác và hỗ trợ phòng khám quản lý dữ liệu hiệu quả hơn.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

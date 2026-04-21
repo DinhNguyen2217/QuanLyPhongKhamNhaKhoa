@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Lịch làm việc bác sĩ{% endblock %}
+
+{% block content %}
+<section class="schedule-page">
+    <div class="schedule-heading">
+        <h1>Lịch làm việc bác sĩ</h1>
+        <p>Theo dõi lịch làm việc của đội ngũ bác sĩ trong tuần.</p>
+    </div>
+
+    <div class="schedule-table-wrap">
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="doctor-head">Bác sĩ</th>
+                    {% for weekday_value, weekday_label in weekdays %}
+                        <th colspan="2" class="day-head">{{ weekday_label }}</th>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for weekday_value, weekday_label in weekdays %}
+                        {% for shift_value, shift_label in shifts %}
+                            <th class="shift-head {% if shift_value == 'morning' %}morning{% else %}afternoon{% endif %}">
+                                {{ shift_label }}
+                            </th>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for row in schedule_rows %}
+                    <tr>
+                        <td class="doctor-cell">
+                            <div class="doctor-name">{{ row.doctor.display_name }}</div>
+                            <div class="doctor-service">
+                                {% if row.service_text %}
+                                    {{ row.service_text }}
+                                {% else %}
+                                    Chưa cập nhật dịch vụ
+                                {% endif %}
+                            </div>
+                        </td>
+
+                        {% for cell in row.cells %}
+                            <td class="schedule-cell {% if cell.shift == 'morning' %}morning{% else %}afternoon{% endif %} {% if cell.active %}active{% endif %}">
+                                {% if cell.active %}
+                                    <span class="tick">✓</span>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="15" class="empty-cell">Chưa có dữ liệu lịch làm việc.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

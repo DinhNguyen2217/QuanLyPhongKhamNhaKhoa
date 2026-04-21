@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Nha Khoa Nụ Cười{% endblock %}
+{% block content %}
+<section class="hero mb-5">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7 mx-auto text-center">
+            <span class="info-badge mb-3">Đặt lịch Nha khoa Nụ Cười</span>
+            <h1 class="display-5 fw-bold section-title mb-3">Chào mừng bạn đến với website đặt lịch khám của Nha Khoa Nụ Cười</h1>
+            <p class="lead text-secondary mb-4">Phòng khám làm việc từ <strong>08:00 sáng đến 20:00 tối</strong>.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                <a class="btn btn-primary btn-lg rounded-pill px-4" href="/appointments/book/">Đặt lịch ngay</a>
+                <a class="btn btn-outline-dark btn-lg rounded-pill px-4" href="/doctors/">Xem đội ngũ bác sĩ</a>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<section class="mb-5">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+        <div><h2 class="section-title mb-2">Dịch vụ nổi bật</h2></div>
+        <a class="btn btn-outline-primary rounded-pill" href="/catalog/services/">Xem tất cả dịch vụ</a>
+    </div>
+    <div class="row g-4">
+        {% for service in services %}
+        <div class="col-md-6 col-xl-4"><div class="card card-service h-100 p-2"><div class="card-body"><span class="info-badge mb-3">Nha khoa</span><h5 class="fw-bold">{{ service.name }}</h5><p class="muted">{{ service.short_description }}</p><a href="/catalog/services/{{ service.slug }}/" class="btn btn-sm btn-outline-primary rounded-pill">Xem chi tiết</a></div></div></div>
+        {% empty %}<p>Chưa có dữ liệu dịch vụ.</p>{% endfor %}
+    </div>
+</section>
+
+
+{% endblock %}

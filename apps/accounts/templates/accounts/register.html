@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Đăng ký{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card p-4 form-shell">
+            <h2 class="section-title h3 mb-3">Đăng ký tài khoản khách hàng</h2>
+            <form method="post" novalidate class="live-validate-form">{% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="form-error-box">{% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}</div>
+                {% endif %}
+                <div class="row g-3">
+                    {% for field in form %}
+                    <div class="{% if field.name == 'password1' or field.name == 'password2' %}col-12{% else %}col-md-6{% endif %}">
+                        <label class="form-label fw-semibold">{{ field.label }}</label>
+                        {{ field }}
+                        <div class="field-errors" data-error-for="{{ field.id_for_label }}">{% if field.errors %}{{ field.errors|join:', ' }}{% endif %}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="btn btn-primary rounded-pill px-4 mt-4">Tạo tài khoản</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Quản lý lịch bác sĩ{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="section-title mb-2">Xếp lịch làm việc theo bác sĩ</h1>
+    </div>
+    <a href="{% url 'dashboard:home' %}" class="btn btn-outline-secondary rounded-pill">Quay lại dashboard</a>
+</div>
+<div class="row g-4">
+    <div class="col-lg-5"><div class="card p-4 h-100"><div class="text-secondary">Vui lòng dùng trang quản trị /admin/ để xếp lịch chi tiết cho từng bác sĩ.</div></div></div>
+    <div class="col-lg-7"><div class="card p-4 h-100"><div class="text-secondary">Danh sách lịch được quản lý tập trung trong khu vực quản trị.</div></div></div>
+</div>
+{% endblock %}

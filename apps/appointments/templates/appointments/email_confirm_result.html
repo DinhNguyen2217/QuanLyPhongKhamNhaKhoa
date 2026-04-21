@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body{
+            margin:0;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            background:#fff;
+            font-family:Arial,sans-serif;
+            text-align:center;
+        }
+        .box{
+            max-width:720px;
+            padding:40px 24px;
+        }
+        .message{
+            font-size:30px;
+            font-weight:700;
+            
+            text-transform:uppercase;
+            white-space:pre-line;
+        }
+        .success{
+            color:#198754;
+        }
+        .error{
+            color:#dc3545;
+        }
+      
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="message {% if success %}success{% else %}error{% endif %}">
+            {{ message }}
+        </div>
+
+        {% if appointment %}
+            
+        {% endif %}
+
+       
+    </div>
+</body>
+</html>
